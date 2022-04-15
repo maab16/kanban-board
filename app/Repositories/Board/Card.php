@@ -108,7 +108,7 @@ class Card extends BaseRepository
 
             $cards = Model::whereColumnId($data['column_id'])->orderBy('order', 'ASC')->get();
             $newCard = Model::find($data['card_id']);
-            if ($newCard->order >= $data['order']) {
+            if ($newCard->column_id != $data['column_id'] || $newCard->order >= $data['order']) {
                 $order = 1;
 
                 foreach ($cards as $card) {
@@ -142,7 +142,6 @@ class Card extends BaseRepository
                     }
                 }
             }
-
 
 
             $newCard->column_id = $data['column_id'];

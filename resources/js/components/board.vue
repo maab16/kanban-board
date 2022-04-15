@@ -17,19 +17,17 @@
                         <button class="card__remove-column" @click="removeColumn(column.id)">Remove</button>
                     </div>
                     <!-- Cards -->
-                    <ul class="card__list">
-                        <draggable :list="column.cards" group="column" @change="changedCard($event, column.id)">
-                            <li class="card__item" v-for="(card, i) in column.cards" :key="i">
-                                <span class="card__item-title" @click="openCardModal(card)">{{ card.title }}</span>
-                                <div class="card__item-action">
-                                    <span class="card__item-action-up" v-if="i > 0" @click="moveUp(card, column.id)"><i class="fas fa-arrow-up"></i></span>
-                                    <span class="card__item-action-down" v-if="i < (column.cards.length - 1)" @click="moveDown(card, column.id)"><i class="fas fa-arrow-down"></i></span>
-                                    <span class="card__item-action-left" v-if="index > 0" @click="moveLeft(index, card)"><i class="fas fa-arrow-left"></i></span>
-                                    <span class="card__item-action-right" v-if="index < (columns.length -1)" @click="moveRight(index, card)"><i class="fas fa-arrow-right"></i></span>
-                                </div>
-                            </li>
-                        </draggable>
-                    </ul>
+                    <draggable :list="column.cards" class="card__list" tag="ul" group="column" @change="changedCard($event, column.id)">
+                        <li class="card__item" v-for="(card, i) in column.cards" :key="i">
+                            <span class="card__item-title" @click="openCardModal(card)">{{ card.title }}</span>
+                            <div class="card__item-action">
+                                <span class="card__item-action-up" v-if="i > 0" @click="moveUp(card, column.id)"><i class="fas fa-arrow-up"></i></span>
+                                <span class="card__item-action-down" v-if="i < (column.cards.length - 1)" @click="moveDown(card, column.id)"><i class="fas fa-arrow-down"></i></span>
+                                <span class="card__item-action-left" v-if="index > 0" @click="moveLeft(index, card)"><i class="fas fa-arrow-left"></i></span>
+                                <span class="card__item-action-right" v-if="index < (columns.length -1)" @click="moveRight(index, card)"><i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </li>
+                    </draggable>
                     <!-- Add New Card -->
                     <div class="card__new-item">
                         <div class="card__new-item-form" v-if="column.isOpenCardForm">
@@ -320,8 +318,6 @@
     body {
         padding: 0px;
         margin: 0px;
-    }
-    body {
         background-image: url('/images/board-bg.jpeg');
         background-position: center;
         background-size: cover;
@@ -329,6 +325,7 @@
         background-attachment: fixed;
         overflow: hidden;
     }
+    
     .container {
         width: 100%;
         padding-right: 15px;
@@ -506,7 +503,7 @@
         }
 
         &__new-column {
-            background-color: hsla(0,0%,100%,.24);
+            background-color: hsla(0,0%,100%,.5);
             border-radius: 3px;
             min-height: 32px;
 
@@ -532,7 +529,7 @@
             border: 0;
             padding: 15px 30px;
             transition: color 85ms ease-in;
-            color: #fff;
+            color: #000;
             font-weight: bold;
             background: transparent;
         }
