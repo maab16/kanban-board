@@ -12,7 +12,7 @@ class VerifyApiToken
         if (!$request->has('access_token')) {
             return response()->json(['status' => 'error', 'message' => 'access token required.']);
         }
-        if (!Auth::guard('api')->check()) {
+        if (!Auth::guard($guard)->check()) {
             return response()->json(['status' => 'error', 'message' => 'token mismatch.']);
         }
         return $next($request);
