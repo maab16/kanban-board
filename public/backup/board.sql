@@ -25,12 +25,12 @@ CREATE TABLE `cards` (
   UNIQUE KEY `cards_title_unique` (`title`),
   KEY `cards_column_id_foreign` (`column_id`),
   CONSTRAINT `cards_column_id_foreign` FOREIGN KEY (`column_id`) REFERENCES `columns` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `cards` WRITE;
 /*!40000 ALTER TABLE `cards` DISABLE KEYS */;
-INSERT INTO `cards` VALUES (13,9,5,'Task 1',NULL,'2021-07-21 16:19:57','2022-04-14 16:04:24',NULL),(14,9,4,'Task Two','description','2021-07-21 16:20:10','2021-07-21 19:17:15',NULL),(15,10,2,'Task 3','Description 3','2021-07-21 16:20:22','2021-07-21 19:17:25',NULL),(16,12,1,'Task 4',NULL,'2021-07-21 16:20:30','2022-04-14 15:21:11',NULL),(17,11,4,'Task 5',NULL,'2021-07-21 16:20:37','2021-07-21 16:47:29',NULL),(18,11,5,'Task 6',NULL,'2021-07-21 16:20:50','2021-07-21 16:47:36',NULL);
+INSERT INTO `cards` VALUES (13,9,1,'Task 1','Hello there','2021-07-21 16:19:57','2022-04-15 06:54:36',NULL),(14,9,2,'Task Two','description','2021-07-21 16:20:10','2022-04-15 06:54:39',NULL),(15,10,1,'Task 3','Description 3','2021-07-21 16:20:22','2022-04-15 06:55:50',NULL),(16,10,2,'Task 4','This is task 4 description','2021-07-21 16:20:30','2022-04-15 06:55:50',NULL),(17,9,3,'Task 5',NULL,'2021-07-21 16:20:37','2022-04-15 06:54:39',NULL),(18,10,3,'Task 6',NULL,'2021-07-21 16:20:50','2022-04-15 06:55:48',NULL),(20,17,2,'Soft delete card 1','This is soft delete card 1 description','2022-04-15 03:37:21','2022-04-15 03:43:58','2022-04-15 03:43:58'),(21,17,1,'Soft delete card 2','This is soft delete card 2','2022-04-15 03:37:55','2022-04-15 03:43:58','2022-04-15 03:43:58');
 /*!40000 ALTER TABLE `cards` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `columns`;
@@ -44,12 +44,12 @@ CREATE TABLE `columns` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `columns_title_unique` (`title`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `columns` WRITE;
 /*!40000 ALTER TABLE `columns` DISABLE KEYS */;
-INSERT INTO `columns` VALUES (9,'To Do List','2021-07-21 16:18:56','2021-07-21 16:18:56',NULL),(10,'On Going','2021-07-21 16:19:28','2021-07-21 16:19:28',NULL),(11,'Review','2021-07-21 16:19:34','2021-07-21 16:19:34',NULL),(12,'Done','2021-07-21 16:19:38','2021-07-21 16:19:38',NULL),(13,'Master','2021-07-21 18:53:56','2021-07-21 18:53:56',NULL),(16,'last test','2021-07-21 22:22:21','2021-07-21 22:22:21',NULL);
+INSERT INTO `columns` VALUES (9,'To Do List','2021-07-21 16:18:56','2021-07-21 16:18:56',NULL),(10,'On Going','2021-07-21 16:19:28','2021-07-21 16:19:28',NULL),(11,'Review','2021-07-21 16:19:34','2021-07-21 16:19:34',NULL),(12,'Done','2021-07-21 16:19:38','2021-07-21 16:19:38',NULL),(13,'Master','2021-07-21 18:53:56','2021-07-21 18:53:56',NULL),(17,'Test','2022-04-15 03:36:49','2022-04-15 03:43:58','2022-04-15 03:43:58');
 /*!40000 ALTER TABLE `columns` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `failed_jobs`;
@@ -80,12 +80,12 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2019_08_19_000000_create_failed_jobs_table',1),(4,'2021_07_20_182352_create_columns_table',1),(5,'2021_07_20_182407_create_cards_table',1);
+INSERT INTO `migrations` VALUES (2,'2014_10_12_100000_create_password_resets_table',1),(3,'2019_08_19_000000_create_failed_jobs_table',1),(4,'2021_07_20_182352_create_columns_table',1),(5,'2021_07_20_182407_create_cards_table',1),(7,'2014_10_12_000000_create_users_table',2),(8,'2022_04_15_101827_create_users_access_token_field',2);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `password_resets`;
@@ -112,16 +112,19 @@ CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `api_token` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `users_email_unique` (`email`),
+  UNIQUE KEY `users_api_token_unique` (`api_token`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Md Abu Ahsan Basir','maab.tips@gmail.com',NULL,'$2y$10$dbLIJmDKKLZ1ADRUYpMkTe722/tkiMzUZRvBQ179mmdBQGYRI9c5K','4362c1866c0c5066fd141e0cc567eb39402b2b9e2fdd7a27d1164b5615b577bf',NULL,'2022-04-15 04:36:00','2022-04-15 04:36:00'),(3,'Md Abu Ahsan Basir','maab.test@gmail.com',NULL,'$2y$10$enEa8QF955DEMxCUuP.fN.TPs6CLPLPDKEHZG/oiTl072toht6OgO','f06e87f0c018142f9479dd6dd14fa25aeae50fd1381b662e4358fe3fd4a4257a',NULL,'2022-04-15 04:50:00','2022-04-15 04:50:00');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

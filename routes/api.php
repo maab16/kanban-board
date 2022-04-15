@@ -16,8 +16,8 @@ Route::resource('cards', CardController::class);
 
 Route::post('cards/swap', [CardController::class , 'swap']);
 Route::post('cards/sort', [CardController::class , 'sort']);
-Route::post('cards/backup', [ExportController::class , 'export']);
+Route::post('cards/export', [ExportController::class , 'export']);
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => 'token:api'], function () {
     Route::get('list-cards', [CardController::class , 'listCards']);
 });

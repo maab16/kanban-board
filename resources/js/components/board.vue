@@ -20,7 +20,7 @@
                     <ul class="card__list">
                         <draggable :list="column.cards" group="column" @change="changedCard($event, column.id)">
                             <li class="card__item" v-for="(card, i) in column.cards" :key="i">
-                                <span class="card__item-title" @click="openCardModal(card)">{{ card.title }} {{ card.order }}</span>
+                                <span class="card__item-title" @click="openCardModal(card)">{{ card.title }}</span>
                                 <div class="card__item-action">
                                     <span class="card__item-action-up" v-if="i > 0" @click="moveUp(card, column.id)"><i class="fas fa-arrow-up"></i></span>
                                     <span class="card__item-action-down" v-if="i < (column.cards.length - 1)" @click="moveDown(card, column.id)"><i class="fas fa-arrow-down"></i></span>
@@ -99,22 +99,13 @@
       components: {
           draggable
       },
-      watch: {
-          "columns": {
-              deep: true,
-              immediate: true,
-              handler(newData, oldData) {
-                  console.log(newData);
-              }
-          }
-      },
     mounted() {
       this.fetchData()
     },
     methods: {
         async fetchData() {
             await window.axios.get('/api/columns').then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.data.status === 'success') {
                     this.columns = res.data.data.map(column => {
                         column.isOpenCardForm = false
@@ -127,14 +118,14 @@
         },
         async saveColumn () {
             if (this.title.length < 1) {
-                console.log('Title must be greater than 1 charecter.')
+                alert('Title must be greater than 1 charecter.')
                 return;
             } 
             let data = {
                 'title' : this.title
             }
             window.axios.post('/api/columns', data).then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.data.status === 'success') {
                     this.title = ''
                     this.fetchData()
@@ -144,14 +135,14 @@
         async removeColumn(id) {
             if (confirm('Are you sure you want to delete this column? This action will delete this column and related cards as well.'))
             window.axios.delete(`api/columns/${id}`).then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.data.status === 'success') {
                     this.fetchData()
                 }
             })
         },
         openCardForm: function (index) {
-            console.log(index)
+            // console.log(index)
             this.columns = this.columns.map((column, key) => {
                 column.cardTitle = ''
                 column.cardDescription = ''
@@ -167,7 +158,7 @@
             this.$modal.show('card-modal')
         },
         async saveCard(column) {
-            console.log(column)
+            // console.log(column)
             let data = {
                 title: column.cardTitle,
                 description: column.cardDescription,
@@ -175,7 +166,7 @@
             }
 
             await window.axios.post('/api/cards', data).then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.data.status === 'success') {
                     this.fetchData()
                 }
@@ -190,7 +181,7 @@
             }
 
             window.axios.put(`/api/cards/${card.id}`, data).then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.data.status === 'success') {
                     this.fetchData()
                     this.$modal.hide('card-modal')
@@ -199,7 +190,7 @@
         },
         moveUpdate: function(data) {
             window.axios.post(`/api/cards/swap`, data).then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.data.status === 'success') {
                     this.fetchData()
                 }
@@ -207,7 +198,7 @@
         },
         sortCards: function(column_id) {
             window.axios.post(`/api/cards/sort`, {column_id: column_id, sort: 'ASC'}).then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.data.status === 'success') {
                     this.fetchData()
                 }
@@ -215,7 +206,7 @@
         },
         changedCard: function(event, column_id) {
 
-            console.log(event)
+            // console.log(event)
             
             if (event.added) {
                 // console.log(event)
@@ -230,7 +221,7 @@
                     order: order,
                 }
 
-                console.log(data);
+                // console.log(data);
 
                 this.moveUpdate(data);
             }
@@ -245,7 +236,7 @@
                     order: order,
                 }
 
-                console.log(data);
+                // console.log(data);
 
                 this.moveUpdate(data);
             }
@@ -262,7 +253,7 @@
                 order: card.order - 1,
             }
 
-            console.log(data);
+            // console.log(data);
             this.moveUpdate(data);
         },
         moveDown: function(card, column_id) {
@@ -272,7 +263,7 @@
                 order: card.order + 1,
             }
 
-            console.log(data);
+            // console.log(data);
 
             this.moveUpdate(data);
         },
@@ -303,9 +294,9 @@
             this.sortCards(prevColumn.id);
         },
         async exportBoard() {
-            console.log('export')
-            window.axios.post('/api/cards/backup').then((res) => {
-                console.log(res)
+            // console.log('export')
+            window.axios.post('/api/cards/export').then((res) => {
+                // console.log(res)
                 if (res.data.status === 'success') {
                     var fileURL = window.URL.createObjectURL(new Blob([res.data.data]));
                     var fileLink = document.createElement('a');
